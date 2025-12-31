@@ -1,0 +1,31 @@
+{
+  "name": "portfolio-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "db:push": "npx drizzle-kit push",
+    "db:generate": "npx drizzle-kit generate",
+    "db:migrate": "npx drizzle-kit migrate",
+    "seed": "node seed.js",
+    "reset": "node -e \"require('./db').sql('DELETE FROM media; DELETE FROM contact; DELETE FROM certifications; DELETE FROM education; DELETE FROM experience; DELETE FROM contributions; DELETE FROM projects; DELETE FROM skills; DELETE FROM about; DELETE FROM home;').then(() => console.log('Reset complete!')).catch(e => console.error(e))\""
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.9.3",
+    "@openai/agents": "^0.3.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.30.10",
+    "express": "^4.18.2",
+    "multer": "^2.0.2",
+    "node-fetch": "^2.7.0",
+    "nodemailer": "^6.9.14",
+    "pg": "^8.11.5"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.21.2",
+    "nodemon": "^3.0.1"
+  }
+}

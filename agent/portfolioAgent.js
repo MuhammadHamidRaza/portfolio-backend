@@ -24,8 +24,9 @@ const { sql } = require("../db");
 // GEMINI CONFIGURATION
 // ================================
 const BASE_URL = process.env.EXAMPLE_BASE_URL || 'https://generativelanguage.googleapis.com/v1beta/';
-const API_KEY = process.env.EXAMPLE_API_KEY || 'AIzaSyBNkEu2yrfwSZqhZGOQEpheTV2Rd1fOcKs';
+const API_KEY = process.env.EXAMPLE_API_KEY || 'AIzaSyBhFdPWNlNBVvJresDavGm3LYY_P5nOY90 ';
 const MODEL_NAME = process.env.EXAMPLE_MODEL_NAME || 'gemini-2.5-flash';
+console.log(API_KEY);
 
 const client = new OpenAI({
   apiKey: API_KEY,

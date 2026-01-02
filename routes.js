@@ -116,9 +116,9 @@ router.get("/auth/verify", verifyToken, (req, res) => {
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'portfolio-uploads', // Folder name in Cloudinary
-    allowed_formats: ['jpeg', 'jpg', 'png', 'gif', 'webp'],
-    transformation: [{ quality: 'auto' }] // Auto quality optimization
+    folder: 'portfolio-uploads',
+    resource_type: 'image',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp']
   }
 });
 

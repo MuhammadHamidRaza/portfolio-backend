@@ -5,9 +5,20 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
 require("dotenv").config();
 const router = express.Router();
+
+// ============================================
+// CLOUDINARY CONFIGURATION
+// ============================================
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 // ============================================
 // TOKEN VERIFICATION MIDDLEWARE
@@ -92,20 +103,13 @@ router.get("/auth/verify", verifyToken, (req, res) => {
 // FILE UPLOAD CONFIGURATION
 // ============================================
 
-// Create uploads directory if it doesn't exist
-const uploadsDir = path.join(__dirname, 'uploads', 'images');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
-}
-
-// Configure multer for image uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadsDir);
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
+// Configure Cloudinary storage for multer
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'portfolio-uploads', // Folder name in Cloudinary
+    allowed_formats: ['jpeg', 'jpg', 'png', 'gif', 'webp'],
+    transformation: [{ quality: 'auto' }] // Auto quality optimization
   }
 });
 
@@ -1389,13 +1393,14 @@ router.post("/upload-image", verifyToken, upload.single('image'), (req, res) => 
       return res.status(400).json({ error: "No image file uploaded" });
     }
 
-    // Return the URL path to access the image
-    const imageUrl = `/uploads/images/${req.file.filename}`;
+    // Cloudinary returns the URL in req.file.path
+    const imageUrl = req.file.path;
 
     res.status(200).json({
       message: "Image uploaded successfully",
       url: imageUrl,
-      filename: req.file.filename
+      filename: req.file.filename,
+      cloudinary_id: req.file.filename
     });
   } catch (error) {
     console.error("Image upload error:", error);

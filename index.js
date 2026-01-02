@@ -9,10 +9,9 @@ const app = express();
 
 // Configure CORS to allow both localhost and production URLs
 const allowedOrigins = [
-  "http://localhost:3000",
   "http://localhost:5000",
   "http://localhost:5173", // Vite default
-  "https://muhammad-hamid-raza.vercel.app",
+  "https://muhammadhamidraza.vercel.app",
   process.env.FRONTEND_URL, // Allow dynamic frontend URL
 ].filter(Boolean);
 

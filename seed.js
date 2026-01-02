@@ -296,7 +296,7 @@ const seedData = async () => {
       INSERT INTO contact (
         contact_items, social_links, meta_title, meta_description, meta_keywords
       ) VALUES (
-        '[{"icon":"fas fa-map-marker-alt","title":"Location","value":"Karachi, Pakistan","color":"primary","link":null},{"icon":"fas fa-envelope","title":"Email","value":"muhammadhamidr92@gmail.com","color":"secondary","link":"mailto:muhammadhamidr92@gmail.com"},{"icon":"fas fa-phone-alt","title":"Phone","value":"+92 316 0010801","color":"accent","link":"tel:+923160010801"},{"icon":"fas fa-globe","title":"Website","value":"https://muhammad-hamid-raza.vercel.app/","color":"primary","link":"https://muhammad-hamid-raza.vercel.app/"}]',
+        '[{"icon":"fas fa-map-marker-alt","title":"Location","value":"Karachi, Pakistan","color":"primary","link":null},{"icon":"fas fa-envelope","title":"Email","value":"muhammadhamidr92@gmail.com","color":"secondary","link":"mailto:muhammadhamidr92@gmail.com"},{"icon":"fas fa-phone-alt","title":"Phone","value":"+92 316 0010801","color":"accent","link":"tel:+923160010801"},{"icon":"fas fa-globe","title":"Website","value":"https://muhammadhamidraza.vercel.app/","color":"primary","link":"https://muhammadhamidraza.vercel.app/"}]',
         '[{"icon":"fab fa-github","url":"https://github.com/muhammadhamidraza","color":"primary","hoverColor":"primary"},{"icon":"fab fa-linkedin-in","url":"https://linkedin.com/in/hamid-raza-b249162a8","color":"secondary","hoverColor":"secondary"},{"icon":"fab fa-twitter","url":"https://twitter.com/muhammadhamidraza","color":"accent","hoverColor":"accent"}]',
         'Contact | Muhammad Hamid Raza',
         'Get in touch with Muhammad Hamid Raza for AI-powered web development projects, collaborations, or inquiries.',

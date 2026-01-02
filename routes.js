@@ -115,10 +115,12 @@ router.get("/auth/verify", verifyToken, (req, res) => {
 // Configure Cloudinary storage for multer
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  params: {
-    folder: 'portfolio-uploads',
-    resource_type: 'image',
-    allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp']
+  params: async (req, file) => {
+    return {
+      folder: 'portfolio-uploads',
+      public_id: `${Date.now()}-${Math.round(Math.random() * 1E9)}`,
+      resource_type: 'image'
+    };
   }
 });
 

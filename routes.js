@@ -14,11 +14,20 @@ const router = express.Router();
 // ============================================
 // CLOUDINARY CONFIGURATION
 // ============================================
-cloudinary.config({
+const cloudinaryConfig = {
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
+};
+
+// Log configuration status (without exposing secrets)
+console.log('Cloudinary Config Status:', {
+  cloud_name: cloudinaryConfig.cloud_name ? '✓ Set' : '✗ Missing',
+  api_key: cloudinaryConfig.api_key ? '✓ Set' : '✗ Missing',
+  api_secret: cloudinaryConfig.api_secret ? '✓ Set' : '✗ Missing'
 });
+
+cloudinary.config(cloudinaryConfig);
 
 // ============================================
 // TOKEN VERIFICATION MIDDLEWARE
@@ -1387,14 +1396,31 @@ router.get("/check", (req, res) => {
 // ============================================
 // IMAGE UPLOAD ENDPOINT
 // ============================================
-router.post("/upload-image", verifyToken, upload.single('image'), (req, res) => {
+router.post("/upload-image", verifyToken, (req, res) => {
+  upload.single('image')(req, res, (err) => {
+    if (err) {
+      console.error("Multer/Upload error:", err);
+      return res.status(500).json({
+        error: "Upload failed",
+        details: err.message
+      });
+    }
+    handleUpload(req, res);
+  });
+});
+
+function handleUpload(req, res) {
   try {
+    console.log('Upload request received');
+    console.log('File:', req.file ? 'Present' : 'Missing');
+
     if (!req.file) {
       return res.status(400).json({ error: "No image file uploaded" });
     }
 
     // Cloudinary returns the URL in req.file.path
     const imageUrl = req.file.path;
+    console.log('Upload successful, URL:', imageUrl);
 
     res.status(200).json({
       message: "Image uploaded successfully",
@@ -1404,9 +1430,13 @@ router.post("/upload-image", verifyToken, upload.single('image'), (req, res) => 
     });
   } catch (error) {
     console.error("Image upload error:", error);
-    res.status(500).json({ error: "Failed to upload image" });
+    console.error("Error stack:", error.stack);
+    res.status(500).json({
+      error: "Failed to upload image",
+      details: error.message
+    });
   }
-});
+}
 
 // Contact form submission endpoint
 router.post("/contact-form", async (req, res) => {
